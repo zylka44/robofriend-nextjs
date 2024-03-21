@@ -1,11 +1,15 @@
-import Link from "next/link";
+import Card from "../components/Card.js";
+import { robots } from "../consts/robots";
 
 const Index = () => (
   <div>
-    <h1>Robofriend</h1>
-    <Link href={"/about"}>
-      <a>About</a>
-    </Link>
+    <h1>RoboFriends</h1>
+    <div>
+      {robots.map((robot) => {
+        const { id, name, email } = robot;
+        return <Card key={id} id={id} name={name} email={email} />;
+      })}
+    </div>
   </div>
 );
 
