@@ -1,16 +1,32 @@
+import { useState } from "react";
 import Card from "../components/Card.js";
-import { robots } from "../consts/robots";
+import SearchBox from "../components/SearchBox.js";
+import { robots as originRobots } from "../consts/robots";
 
-const Index = () => (
-  <div>
-    <h1>RoboFriends</h1>
-    <div>
-      {robots.map((robot) => {
-        const { id, name, email } = robot;
-        return <Card key={id} id={id} name={name} email={email} />;
-      })}
+const Index = () => {
+  const [robots, setRobots] = useState(originRobots);
+  const [searchText, setSearchText] = useState(originRobots);
+
+  const onSearchChange = (event) => {
+    const { value } = event.target;
+    const filteredRobots = originRobots.filter((robot) =>
+      robot.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setRobots(filteredRobots);
+  };
+
+  return (
+    <div className="tc">
+      <h1>RoboFriends</h1>
+      <SearchBox searchChange={onSearchChange} />
+      <div>
+        {robots.map((robot) => {
+          const { id, name, email } = robot;
+          return <Card key={id} id={id} name={name} email={email} />;
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Index;
