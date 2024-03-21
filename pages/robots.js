@@ -1,27 +1,18 @@
-import Link from "next/link";
-import fetch from "isomorphic-unfetch";
+import Card from "../components/Card.js";
+import { robots } from "../consts/robots";
 
-const Robots = (props) => {
+const Robots = () => {
   return (
     <div>
       <h1>Robots</h1>
       <div>
-        {props.robots.map((robot) => (
-          <li key={robot.id}>
-            <Link href={`robots/${robot.id}`}>{robot.name}</Link>
-          </li>
-        ))}
+        {robots.map((robot) => {
+          const { id, name, email } = robot;
+          return <Card key={id} id={id} name={name} email={email} />;
+        })}
       </div>
     </div>
   );
-};
-
-Robots.getInitialProps = async function () {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
-  const data = await res.json();
-  return {
-    robots: data,
-  };
 };
 
 export default Robots;
